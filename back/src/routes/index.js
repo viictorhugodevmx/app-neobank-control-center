@@ -8,6 +8,8 @@ const accountsRoutes = require('../modules/accounts/accounts.routes');
 const cardsRoutes = require('../modules/cards/cards.routes');
 const transfersRoutes = require('../modules/transfers/transfers.routes');
 const incidentsRoutes = require('../modules/incidents/incidents.routes');
+const notificationsRoutes = require('../modules/notifications/notifications.routes');
+const dashboardRoutes = require('../modules/dashboard/dashboard.routes');
 
 const router = express.Router();
 
@@ -20,5 +22,7 @@ router.use('/accounts', accountsRoutes);
 router.use('/cards', cardsRoutes);
 router.use('/transfers', transfersRoutes);
 router.use('/incidents', incidentsRoutes);
+router.use('/notifications', notificationsRoutes);
+router.use('/dashboard', dashboardRoutes);
 
 module.exports = router;
