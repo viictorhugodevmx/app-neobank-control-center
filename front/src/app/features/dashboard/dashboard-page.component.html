@@ -1,0 +1,56 @@
+<section class="dashboard-page">
+  <div class="hero-card">
+    <div>
+      <span class="eyebrow">Fintech Operations</span>
+      <h1>Administrative Control Dashboard</h1>
+      <p>
+        Base Angular shell ready to connect with auth, KPIs, operational alerts
+        and banking modules.
+      </p>
+    </div>
+
+    <div class="hero-card__pill">
+      Backend ready
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    @for (item of stats; track item.title) {
+      <article class="stat-card">
+        <h3>{{ item.title }}</h3>
+        <strong>{{ item.value }}</strong>
+        <p>{{ item.subtitle }}</p>
+      </article>
+    }
+  </div>
+
+  <div class="content-grid">
+    <article class="panel panel--wide">
+      <div class="panel__header">
+        <h3>System status</h3>
+        <span>Bootstrap</span>
+      </div>
+
+      <div class="panel__body">
+        <p>
+          Frontend foundation created successfully. The next steps will connect
+          login, guards, interceptor and live dashboard data from the backend.
+        </p>
+      </div>
+    </article>
+
+    <article class="panel">
+      <div class="panel__header">
+        <h3>Next module</h3>
+        <span>Auth</span>
+      </div>
+
+      <div class="panel__body">
+        <p>
+          The next step will focus on login screen, auth flow and protected
+          layout.
+        </p>
+      </div>
+    </article>
+  </div>
+</section>

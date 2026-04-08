@@ -1,0 +1,28 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand__badge">NB</div>
+      <div class="brand__text">
+        <h1>NeoBank</h1>
+        <p>Control Center</p>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <h2>NeoBank Control Center</h2>
+        <p>Administrative fintech console</p>
+      </div>
+    </header>
+
+    <section class="page-body">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>
