@@ -1,0 +1,81 @@
+<section class="login-page">
+  <article class="login-page__intro">
+    <div class="brand-badge">NB</div>
+
+    <span class="eyebrow">Digital Banking Operations</span>
+
+    <h1>NeoBank Control Center</h1>
+
+    <p>
+      Secure administrative access for onboarding, KYC, accounts, cards,
+      transfers, security and operational monitoring.
+    </p>
+
+    <div class="feature-list">
+      <div class="feature-item">
+        <strong>Operational visibility</strong>
+        <span>Monitor customers, accounts and incidents in one place.</span>
+      </div>
+
+      <div class="feature-item">
+        <strong>Security first</strong>
+        <span>Role-based access, protected routes and controlled operations.</span>
+      </div>
+
+      <div class="feature-item">
+        <strong>Fintech-ready workflow</strong>
+        <span>Built to reflect real internal banking operations.</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="login-card">
+    <div class="login-card__header">
+      <span class="eyebrow eyebrow--dark">Admin access</span>
+      <h2>Sign in</h2>
+      <p>Use your internal credentials to access the platform.</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+        />
+        @if (emailControl.touched && emailControl.invalid) {
+          <small>Please enter a valid email.</small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+        />
+        @if (passwordControl.touched && passwordControl.invalid) {
+          <small>Password is required and must be at least 6 characters.</small>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <div class="form-error">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Signing in...' : 'Sign in' }}
+      </button>
+    </form>
+
+    <div class="login-card__footer">
+      <span>Demo credentials preloaded for the next integration step.</span>
+    </div>
+  </article>
+</section>

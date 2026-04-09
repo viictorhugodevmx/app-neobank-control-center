@@ -97,3 +97,19 @@
 .page-body {
   padding: 28px;
 }
+
+.logout-btn {
+  height: 42px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: #111827;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.18s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
