@@ -1,0 +1,149 @@
+<section class="customer-detail-page">
+  <div class="page-topbar">
+    <button type="button" class="back-btn" (click)="backToCustomers()">
+      ← Back to customers
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <section class="feedback-card">
+      <h3>Loading customer...</h3>
+      <p>We are fetching the customer detail from the backend.</p>
+    </section>
+  } @else if (errorMessage) {
+    <section class="feedback-card feedback-card--error">
+      <h3>Customer unavailable</h3>
+      <p>{{ errorMessage }}</p>
+      <button type="button" (click)="backToCustomers()">Go back</button>
+    </section>
+  } @else if (customer) {
+    <div class="detail-hero">
+      <div>
+        <span class="eyebrow">Customer detail</span>
+        <h1>{{ customer.firstName }} {{ customer.lastName }}</h1>
+        <p>
+          {{ customer.customerNumber }} · {{ customer.email }}
+        </p>
+      </div>
+
+      <div class="hero-statuses">
+        <span [class]="getStatusClass(customer.onboardingStatus)">
+          {{ customer.onboardingStatus }}
+        </span>
+        <span [class]="getStatusClass(customer.kycStatus)">
+          {{ customer.kycStatus }}
+        </span>
+        <span [class]="getStatusClass(customer.riskLevel)">
+          {{ customer.riskLevel }}
+        </span>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <article class="panel">
+        <div class="panel__header">
+          <h3>Identity</h3>
+        </div>
+
+        <div class="panel__body info-grid">
+          <div class="info-item">
+            <span>First name</span>
+            <strong>{{ customer.firstName }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Last name</span>
+            <strong>{{ customer.lastName }}</strong>
+          </div>
+          <div class="info-item">
+            <span>National ID</span>
+            <strong>{{ customer.nationalId }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Tax ID</span>
+            <strong>{{ customer.taxId || '—' }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Date of birth</span>
+            <strong>{{ customer.dateOfBirth | date:'mediumDate' }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Accepted terms</span>
+            <strong>{{ customer.acceptedTerms ? 'Yes' : 'No' }}</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel__header">
+          <h3>Contact</h3>
+        </div>
+
+        <div class="panel__body info-grid">
+          <div class="info-item">
+            <span>Email</span>
+            <strong>{{ customer.email }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Phone</span>
+            <strong>{{ customer.phone }}</strong>
+          </div>
+          <div class="info-item info-item--full">
+            <span>Address</span>
+            <strong>{{ customer.address }}</strong>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="detail-grid">
+      <article class="panel">
+        <div class="panel__header">
+          <h3>Financial profile</h3>
+        </div>
+
+        <div class="panel__body info-grid">
+          <div class="info-item">
+            <span>Occupation</span>
+            <strong>{{ customer.occupation || '—' }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Monthly income</span>
+            <strong>{{ customer.monthlyIncome | number }}</strong>
+          </div>
+          <div class="info-item info-item--full">
+            <span>Source of funds</span>
+            <strong>{{ customer.sourceOfFunds || '—' }}</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel__header">
+          <h3>Audit</h3>
+        </div>
+
+        <div class="panel__body info-grid">
+          <div class="info-item">
+            <span>Created at</span>
+            <strong>{{ customer.createdAt | date:'medium' }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Updated at</span>
+            <strong>{{ customer.updatedAt | date:'medium' }}</strong>
+          </div>
+          <div class="info-item info-item--full">
+            <span>Created by</span>
+            <strong>
+              @if (customer.createdBy) {
+                {{ customer.createdBy.firstName }} {{ customer.createdBy.lastName }} ·
+                {{ customer.createdBy.email }}
+              } @else {
+                —
+              }
+            </strong>
+          </div>
+        </div>
+      </article>
+    </div>
+  }
+</section>

@@ -4,53 +4,159 @@
       <span class="eyebrow">Fintech Operations</span>
       <h1>Administrative Control Dashboard</h1>
       <p>
-        Base Angular shell ready to connect with auth, KPIs, operational alerts
-        and banking modules.
+        Real-time overview of onboarding, accounts, cards, transfers, incidents
+        and notifications from the NeoBank backend.
       </p>
     </div>
 
     <div class="hero-card__pill">
-      Backend ready
+      Live backend data
     </div>
   </div>
 
-  <div class="stats-grid">
-    @for (item of stats; track item.title) {
-      <article class="stat-card">
-        <h3>{{ item.title }}</h3>
-        <strong>{{ item.value }}</strong>
-        <p>{{ item.subtitle }}</p>
-      </article>
-    }
-  </div>
-
-  <div class="content-grid">
-    <article class="panel panel--wide">
-      <div class="panel__header">
-        <h3>System status</h3>
-        <span>Bootstrap</span>
+  @if (isLoading) {
+    <section class="feedback-card">
+      <h3>Loading dashboard...</h3>
+      <p>We are fetching your operational summary from the backend.</p>
+    </section>
+  } @else if (errorMessage) {
+    <section class="feedback-card feedback-card--error">
+      <h3>Dashboard unavailable</h3>
+      <p>{{ errorMessage }}</p>
+      <button type="button" (click)="loadSummary()">Try again</button>
+    </section>
+  } @else if (summary) {
+    <ng-container>
+      <div class="stats-grid">
+        @for (item of statCards; track item.title) {
+          <article class="stat-card">
+            <h3>{{ item.title }}</h3>
+            <strong>{{ item.value }}</strong>
+            <p>{{ item.subtitle }}</p>
+          </article>
+        }
       </div>
 
-      <div class="panel__body">
-        <p>
-          Frontend foundation created successfully. The next steps will connect
-          login, guards, interceptor and live dashboard data from the backend.
-        </p>
-      </div>
-    </article>
+      <div class="content-grid">
+        <article class="panel panel--wide">
+          <div class="panel__header">
+            <h3>Latest transfers</h3>
+            <span>{{ summary.latest.transfers.length }}</span>
+          </div>
 
-    <article class="panel">
-      <div class="panel__header">
-        <h3>Next module</h3>
-        <span>Auth</span>
+          <div class="panel__body panel__body--list">
+            @if (summary.latest.transfers.length) {
+              @for (item of summary.latest.transfers; track item._id) {
+                <div class="list-item">
+                  <div>
+                    <strong>{{ item.transferNumber }}</strong>
+                    <p>{{ item.beneficiaryName }} · {{ item.destinationAccount }}</p>
+                  </div>
+
+                  <div class="list-item__meta">
+                    <span>{{ item.amount }} {{ item.currency }}</span>
+                    <small>{{ item.status }} / {{ item.riskFlag }}</small>
+                  </div>
+                </div>
+              }
+            } @else {
+              <p class="empty-state">No recent transfers yet.</p>
+            }
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__header">
+            <h3>Incidents</h3>
+            <span>{{ summary.latest.incidents.length }}</span>
+          </div>
+
+          <div class="panel__body panel__body--list">
+            @if (summary.latest.incidents.length) {
+              @for (item of summary.latest.incidents; track item._id) {
+                <div class="list-item list-item--stacked">
+                  <strong>{{ item.incidentNumber }}</strong>
+                  <p>{{ item.title }}</p>
+                  <small>{{ item.priority }} · {{ item.status }}</small>
+                </div>
+              }
+            } @else {
+              <p class="empty-state">No incidents found.</p>
+            }
+          </div>
+        </article>
       </div>
 
-      <div class="panel__body">
-        <p>
-          The next step will focus on login screen, auth flow and protected
-          layout.
-        </p>
+      <div class="content-grid">
+        <article class="panel panel--wide">
+          <div class="panel__header">
+            <h3>Notifications</h3>
+            <span>{{ summary.latest.notifications.length }}</span>
+          </div>
+
+          <div class="panel__body panel__body--list">
+            @if (summary.latest.notifications.length) {
+              @for (item of summary.latest.notifications; track item._id) {
+                <div class="list-item">
+                  <div>
+                    <strong>{{ item.title }}</strong>
+                    <p>{{ item.message || 'No message provided.' }}</p>
+                  </div>
+
+                  <div class="list-item__meta">
+                    <span>{{ item.severity }}</span>
+                    <small>{{ item.module }}</small>
+                  </div>
+                </div>
+              }
+            } @else {
+              <p class="empty-state">No notifications found.</p>
+            }
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__header">
+            <h3>Status breakdowns</h3>
+            <span>Summary</span>
+          </div>
+
+          <div class="panel__body panel__body--list">
+            <div class="breakdown-block">
+              <strong>Accounts</strong>
+              @if (summary.breakdowns.accountsByStatus.length) {
+                @for (item of summary.breakdowns.accountsByStatus; track item._id) {
+                  <p>{{ item._id }}: {{ item.count }}</p>
+                }
+              } @else {
+                <p class="empty-inline">No data</p>
+              }
+            </div>
+
+            <div class="breakdown-block">
+              <strong>Cards</strong>
+              @if (summary.breakdowns.cardsByStatus.length) {
+                @for (item of summary.breakdowns.cardsByStatus; track item._id) {
+                  <p>{{ item._id }}: {{ item.count }}</p>
+                }
+              } @else {
+                <p class="empty-inline">No data</p>
+              }
+            </div>
+
+            <div class="breakdown-block">
+              <strong>Incidents</strong>
+              @if (summary.breakdowns.incidentsByStatus.length) {
+                @for (item of summary.breakdowns.incidentsByStatus; track item._id) {
+                  <p>{{ item._id }}: {{ item.count }}</p>
+                }
+              } @else {
+                <p class="empty-inline">No data</p>
+              }
+            </div>
+          </div>
+        </article>
       </div>
-    </article>
-  </div>
+    </ng-container>
+  }
 </section>

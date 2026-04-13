@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
+import { guestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
   {
     path: 'auth',
+    canActivate: [guestGuard],
     loadComponent: () =>
       import('./layout/auth-shell/auth-shell.component').then(
         (m) => m.AuthShellComponent
@@ -24,16 +27,12 @@ export const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./layout/main-shell/main-shell.component').then(
         (m) => m.MainShellComponent
       ),
     children: [
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
-      },
       {
         path: 'dashboard',
         loadComponent: () =>
@@ -41,7 +40,26 @@ export const routes: Routes = [
             (m) => m.DashboardPageComponent
           ),
       },
+      {
+        path: 'customers',
+        loadComponent: () =>
+          import(
+            './features/customers/pages/customers-list-page/customers-list-page.component'
+          ).then((m) => m.CustomersListPageComponent),
+      },
+      {
+        path: 'customers/:id',
+        loadComponent: () =>
+          import(
+            './features/customers/pages/customer-detail-page/customer-detail-page.component'
+          ).then((m) => m.CustomerDetailPageComponent),
+      },
     ],
+  },
+  {
+    path: '',
+    redirectTo: 'auth/login',
+    pathMatch: 'full',
   },
   {
     path: '**',

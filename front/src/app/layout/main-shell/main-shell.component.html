@@ -10,6 +10,7 @@
 
     <nav class="nav">
       <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/customers" routerLinkActive="active">Customers</a>
     </nav>
   </aside>
 
@@ -20,9 +21,20 @@
         <p>Administrative fintech console</p>
       </div>
 
-      <button class="logout-btn" (click)="logout()">
-        Sign out
-      </button>
+      <div class="topbar__actions">
+        <div class="user-chip" *ngIf="currentUser as user">
+          <span class="user-chip__name">
+            {{ user.firstName }} {{ user.lastName }}
+          </span>
+          <span class="user-chip__role">
+            {{ user.role.name }}
+          </span>
+        </div>
+
+        <button class="logout-btn" (click)="logout()">
+          Sign out
+        </button>
+      </div>
     </header>
 
     <section class="page-body">

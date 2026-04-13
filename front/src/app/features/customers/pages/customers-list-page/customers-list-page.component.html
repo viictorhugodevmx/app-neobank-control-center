@@ -1,0 +1,103 @@
+<section class="customers-page">
+  <div class="page-hero">
+    <div>
+      <span class="eyebrow">Customers</span>
+      <h1>Customer onboarding overview</h1>
+      <p>
+        Review registered customers, onboarding status, KYC status and core
+        profile information from the NeoBank backend.
+      </p>
+    </div>
+
+    <div class="page-hero__badge">
+      {{ customers.length }} records
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <section class="feedback-card">
+      <h3>Loading customers...</h3>
+      <p>We are fetching the customer list from the backend.</p>
+    </section>
+  } @else if (errorMessage) {
+    <section class="feedback-card feedback-card--error">
+      <h3>Customers unavailable</h3>
+      <p>{{ errorMessage }}</p>
+      <button type="button" (click)="loadCustomers()">Try again</button>
+    </section>
+  } @else {
+    <section class="customers-table-card">
+      <div class="table-head">
+        <div>
+          <h3>Registered customers</h3>
+          <p>Operational view of onboarding and KYC pipeline.</p>
+        </div>
+      </div>
+
+      @if (customers.length) {
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Customer No.</th>
+                <th>Contact</th>
+                <th>Onboarding</th>
+                <th>KYC</th>
+                <th>Risk</th>
+                <th>Income</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (item of customers; track item._id) {
+                <tr class="clickable-row" (click)="openCustomerDetail(item._id)">
+                  <td>
+                    <div class="customer-cell">
+                      <strong>{{ item.firstName }} {{ item.lastName }}</strong>
+                      <span>{{ item.nationalId }}</span>
+                    </div>
+                  </td>
+
+                  <td>{{ item.customerNumber }}</td>
+
+                  <td>
+                    <div class="contact-cell">
+                      <span>{{ item.email }}</span>
+                      <small>{{ item.phone }}</small>
+                    </div>
+                  </td>
+
+                  <td>
+                    <span [class]="getStatusClass(item.onboardingStatus)">
+                      {{ item.onboardingStatus }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span [class]="getStatusClass(item.kycStatus)">
+                      {{ item.kycStatus }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span [class]="getStatusClass(item.riskLevel)">
+                      {{ item.riskLevel }}
+                    </span>
+                  </td>
+
+                  <td>{{ item.monthlyIncome | number }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="empty-state-card">
+          <h3>No customers found</h3>
+          <p>Create customers from your backend flow and they will appear here.</p>
+        </div>
+      }
+    </section>
+  }
+</section>

@@ -47,9 +47,44 @@
   }
 }
 
+.feedback-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+
+  h3 {
+    margin: 0 0 8px;
+    color: #111827;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+  }
+
+  button {
+    margin-top: 16px;
+    height: 42px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 12px;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  &--error {
+    border-color: #fecaca;
+    background: #fff7f7;
+  }
+}
+
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 18px;
 }
 
@@ -94,7 +129,7 @@
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
 
   &--wide {
-    min-height: 220px;
+    min-height: 240px;
   }
 
   &__header {
@@ -124,10 +159,87 @@
   &__body {
     padding: 20px;
 
-    p {
-      margin: 0;
-      line-height: 1.65;
-      color: #475569;
+    &--list {
+      display: grid;
+      gap: 14px;
     }
   }
+}
+
+.list-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eef2f7;
+
+  &:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #0f172a;
+    font-size: 14px;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  &__meta {
+    text-align: right;
+
+    span {
+      display: block;
+      font-weight: 700;
+      color: #111827;
+      font-size: 14px;
+    }
+
+    small {
+      color: #64748b;
+      font-size: 12px;
+    }
+  }
+
+  &--stacked {
+    display: block;
+  }
+}
+
+.breakdown-block {
+  display: grid;
+  gap: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eef2f7;
+
+  &:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  strong {
+    color: #0f172a;
+    font-size: 14px;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+  }
+}
+
+.empty-state,
+.empty-inline {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 13px;
 }
