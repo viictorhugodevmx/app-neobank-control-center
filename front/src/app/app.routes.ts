@@ -54,6 +54,34 @@ export const routes: Routes = [
             './features/customers/pages/customer-detail-page/customer-detail-page.component'
           ).then((m) => m.CustomerDetailPageComponent),
       },
+      {
+        path: 'accounts',
+        loadComponent: () =>
+          import(
+            './features/accounts/pages/accounts-list-page/accounts-list-page.component'
+          ).then((m) => m.AccountsListPageComponent),
+      },
+      {
+        path: 'cards',
+        loadComponent: () =>
+          import(
+            './features/cards/pages/cards-list-page/cards-list-page.component'
+          ).then((m) => m.CardsListPageComponent),
+      },
+      {
+        path: 'transfers',
+        loadComponent: () =>
+          import(
+            './features/transfers/pages/transfers-list-page/transfers-list-page.component'
+          ).then((m) => m.TransfersListPageComponent),
+      },
+      {
+        path: 'incidents',
+        loadComponent: () =>
+          import(
+            './features/incidents/pages/incidents-list-page/incidents-list-page.component'
+          ).then((m) => m.IncidentsListPageComponent),
+      },
     ],
   },
   {

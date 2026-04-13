@@ -1,0 +1,108 @@
+<section class="incidents-page">
+  <div class="page-hero">
+    <div>
+      <span class="eyebrow">Incidents</span>
+      <h1>Operational incidents overview</h1>
+      <p>
+        Review internal incidents, priorities, statuses, assignments and related
+        entities from the NeoBank backend.
+      </p>
+    </div>
+
+    <div class="page-hero__badge">
+      {{ incidents.length }} records
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <section class="feedback-card">
+      <h3>Loading incidents...</h3>
+      <p>We are fetching the incidents list from the backend.</p>
+    </section>
+  } @else if (errorMessage) {
+    <section class="feedback-card feedback-card--error">
+      <h3>Incidents unavailable</h3>
+      <p>{{ errorMessage }}</p>
+      <button type="button" (click)="loadIncidents()">Try again</button>
+    </section>
+  } @else {
+    <section class="incidents-table-card">
+      <div class="table-head">
+        <div>
+          <h3>Operational incidents</h3>
+          <p>Operational view of support, monitoring and internal follow-up cases.</p>
+        </div>
+      </div>
+
+      @if (incidents.length) {
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Incident</th>
+                <th>Type</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Assigned to</th>
+                <th>Related entity</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (item of incidents; track item._id) {
+                <tr>
+                  <td>
+                    <div class="incident-cell">
+                      <strong>{{ item.incidentNumber }}</strong>
+                      <span>{{ item.title }}</span>
+                    </div>
+                  </td>
+
+                  <td>{{ item.type }}</td>
+
+                  <td>
+                    <span [class]="getPriorityClass(item.priority)">
+                      {{ item.priority }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span [class]="getStatusClass(item.status)">
+                      {{ item.status }}
+                    </span>
+                  </td>
+
+                  <td>
+                    @if (item.assignedTo) {
+                      <div class="assigned-cell">
+                        <strong>{{ item.assignedTo.firstName }} {{ item.assignedTo.lastName }}</strong>
+                        <span>{{ item.assignedTo.email }}</span>
+                      </div>
+                    } @else {
+                      <span class="empty-inline">Unassigned</span>
+                    }
+                  </td>
+
+                  <td>
+                    <div class="entity-cell">
+                      <strong>{{ item.relatedEntityType }}</strong>
+                      <span>{{ item.relatedEntityId || '—' }}</span>
+                    </div>
+                  </td>
+
+                  <td>{{ item.createdAt | date:'medium' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="empty-state-card">
+          <h3>No incidents found</h3>
+          <p>Create incidents from your backend flow and they will appear here.</p>
+        </div>
+      }
+    </section>
+  }
+</section>

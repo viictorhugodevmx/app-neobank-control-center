@@ -1,0 +1,218 @@
+.cards-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-hero {
+  background: linear-gradient(135deg, #0f172a, #1d4ed8);
+  color: #fff;
+  border-radius: 24px;
+  padding: 28px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
+
+  .eyebrow {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  h1 {
+    margin: 0 0 10px;
+    font-size: 30px;
+    line-height: 1.1;
+  }
+
+  p {
+    margin: 0;
+    max-width: 640px;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  &__badge {
+    white-space: nowrap;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+.feedback-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+
+  h3 {
+    margin: 0 0 8px;
+    color: #111827;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+  }
+
+  button {
+    margin-top: 16px;
+    height: 42px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 12px;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  &--error {
+    border-color: #fecaca;
+    background: #fff7f7;
+  }
+}
+
+.cards-table-card {
+  background: #fff;
+  border-radius: 24px;
+  border: 1px solid #eaf0f6;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+}
+
+.table-head {
+  padding: 22px 24px;
+  border-bottom: 1px solid #eef2f7;
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    color: #111827;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+  }
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background: #f8fafc;
+
+    th {
+      text-align: left;
+      padding: 16px 18px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #64748b;
+      border-bottom: 1px solid #eef2f7;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background 0.18s ease;
+
+      &:hover {
+        background: #f8fbff;
+      }
+    }
+
+    td {
+      padding: 18px;
+      border-bottom: 1px solid #eef2f7;
+      vertical-align: middle;
+      color: #0f172a;
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+  }
+}
+
+.card-cell,
+.holder-cell,
+.account-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  strong {
+    color: #0f172a;
+    font-size: 14px;
+  }
+
+  span {
+    color: #475569;
+    font-size: 13px;
+  }
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 130px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+
+  &--pending_activation {
+    background: #fff7ed;
+    color: #c2410c;
+  }
+
+  &--active {
+    background: #ecfdf5;
+    color: #047857;
+  }
+
+  &--frozen {
+    background: #eff6ff;
+    color: #1d4ed8;
+  }
+
+  &--blocked,
+  &--expired {
+    background: #fef2f2;
+    color: #b91c1c;
+  }
+}
+
+.empty-state-card {
+  padding: 36px 24px;
+
+  h3 {
+    margin: 0 0 8px;
+    color: #111827;
+  }
+
+  p {
+    margin: 0;
+    color: #64748b;
+  }
+}

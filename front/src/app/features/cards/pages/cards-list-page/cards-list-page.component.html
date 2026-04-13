@@ -1,0 +1,103 @@
+<section class="cards-page">
+  <div class="page-hero">
+    <div>
+      <span class="eyebrow">Cards</span>
+      <h1>Issued cards overview</h1>
+      <p>
+        Review customer-linked cards, related accounts, card status, brands and
+        operational limits from the NeoBank backend.
+      </p>
+    </div>
+
+    <div class="page-hero__badge">
+      {{ cards.length }} records
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <section class="feedback-card">
+      <h3>Loading cards...</h3>
+      <p>We are fetching the card list from the backend.</p>
+    </section>
+  } @else if (errorMessage) {
+    <section class="feedback-card feedback-card--error">
+      <h3>Cards unavailable</h3>
+      <p>{{ errorMessage }}</p>
+      <button type="button" (click)="loadCards()">Try again</button>
+    </section>
+  } @else {
+    <section class="cards-table-card">
+      <div class="table-head">
+        <div>
+          <h3>Issued cards</h3>
+          <p>Operational view of cards, linked customers and account context.</p>
+        </div>
+      </div>
+
+      @if (cards.length) {
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Card</th>
+                <th>Holder</th>
+                <th>Account</th>
+                <th>Type</th>
+                <th>Brand</th>
+                <th>Status</th>
+                <th>Purchase limit</th>
+                <th>Withdrawal limit</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (item of cards; track item._id) {
+                <tr>
+                  <td>
+                    <div class="card-cell">
+                      <strong>{{ item.cardNumberMasked }}</strong>
+                      <span>{{ item.expirationMonth }}/{{ item.expirationYear }}</span>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="holder-cell">
+                      <strong>{{ item.customerId.firstName }} {{ item.customerId.lastName }}</strong>
+                      <span>{{ item.holderName }}</span>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="account-cell">
+                      <strong>{{ item.accountId.accountNumber }}</strong>
+                      <span>{{ item.accountId.currency }} · {{ item.accountId.type }}</span>
+                    </div>
+                  </td>
+
+                  <td>{{ item.type }}</td>
+
+                  <td>{{ item.brand }}</td>
+
+                  <td>
+                    <span [class]="getStatusClass(item.status)">
+                      {{ item.status }}
+                    </span>
+                  </td>
+
+                  <td>{{ item.dailyPurchaseLimit | number:'1.0-2' }}</td>
+
+                  <td>{{ item.dailyWithdrawalLimit | number:'1.0-2' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="empty-state-card">
+          <h3>No cards found</h3>
+          <p>Create cards from your backend flow and they will appear here.</p>
+        </div>
+      }
+    </section>
+  }
+</section>

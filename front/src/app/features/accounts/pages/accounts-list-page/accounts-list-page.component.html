@@ -1,0 +1,104 @@
+<section class="accounts-page">
+  <div class="page-hero">
+    <div>
+      <span class="eyebrow">Accounts</span>
+      <h1>Digital accounts overview</h1>
+      <p>
+        Review customer-linked accounts, balances, limits, currencies and
+        operational status from the NeoBank backend.
+      </p>
+    </div>
+
+    <div class="page-hero__badge">
+      {{ accounts.length }} records
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <section class="feedback-card">
+      <h3>Loading accounts...</h3>
+      <p>We are fetching the account list from the backend.</p>
+    </section>
+  } @else if (errorMessage) {
+    <section class="feedback-card feedback-card--error">
+      <h3>Accounts unavailable</h3>
+      <p>{{ errorMessage }}</p>
+      <button type="button" (click)="loadAccounts()">Try again</button>
+    </section>
+  } @else {
+    <section class="accounts-table-card">
+      <div class="table-head">
+        <div>
+          <h3>Registered accounts</h3>
+          <p>Operational view of digital banking accounts and balances.</p>
+        </div>
+      </div>
+
+      @if (accounts.length) {
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Account</th>
+                <th>Customer</th>
+                <th>Type</th>
+                <th>Currency</th>
+                <th>Status</th>
+                <th>Balance</th>
+                <th>Available</th>
+                <th>Primary</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (item of accounts; track item._id) {
+                <tr>
+                  <td>
+                    <div class="account-cell">
+                      <strong>{{ item.accountNumber }}</strong>
+                      <span>{{ item.clabe }}</span>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="customer-cell">
+                      <strong>
+                        {{ item.customerId.firstName }} {{ item.customerId.lastName }}
+                      </strong>
+                      <span>{{ item.customerId.customerNumber }}</span>
+                    </div>
+                  </td>
+
+                  <td>{{ item.type }}</td>
+
+                  <td>{{ item.currency }}</td>
+
+                  <td>
+                    <span [class]="getStatusClass(item.status)">
+                      {{ item.status }}
+                    </span>
+                  </td>
+
+                  <td>{{ item.balance | number:'1.0-2' }}</td>
+
+                  <td>{{ item.availableBalance | number:'1.0-2' }}</td>
+
+                  <td>
+                    <span [class]="item.isPrimary ? 'flag-pill flag-pill--yes' : 'flag-pill flag-pill--no'">
+                      {{ item.isPrimary ? 'Yes' : 'No' }}
+                    </span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="empty-state-card">
+          <h3>No accounts found</h3>
+          <p>Create accounts from your backend flow and they will appear here.</p>
+        </div>
+      }
+    </section>
+  }
+</section>

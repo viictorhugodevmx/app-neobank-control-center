@@ -1,0 +1,107 @@
+<section class="transfers-page">
+  <div class="page-hero">
+    <div>
+      <span class="eyebrow">Transfers</span>
+      <h1>Transfers overview</h1>
+      <p>
+        Review outgoing transfers, origin accounts, beneficiaries, operational
+        status and risk flags from the NeoBank backend.
+      </p>
+    </div>
+
+    <div class="page-hero__badge">
+      {{ transfers.length }} records
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <section class="feedback-card">
+      <h3>Loading transfers...</h3>
+      <p>We are fetching the transfers list from the backend.</p>
+    </section>
+  } @else if (errorMessage) {
+    <section class="feedback-card feedback-card--error">
+      <h3>Transfers unavailable</h3>
+      <p>{{ errorMessage }}</p>
+      <button type="button" (click)="loadTransfers()">Try again</button>
+    </section>
+  } @else {
+    <section class="transfers-table-card">
+      <div class="table-head">
+        <div>
+          <h3>Processed transfers</h3>
+          <p>Operational view of transfer execution, status and risk.</p>
+        </div>
+      </div>
+
+      @if (transfers.length) {
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Transfer</th>
+                <th>Origin account</th>
+                <th>Beneficiary</th>
+                <th>Destination</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Risk</th>
+                <th>Processed</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (item of transfers; track item._id) {
+                <tr>
+                  <td>
+                    <div class="transfer-cell">
+                      <strong>{{ item.transferNumber }}</strong>
+                      <span>{{ item.reference || 'No reference' }}</span>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="account-cell">
+                      <strong>{{ item.originAccountId.accountNumber }}</strong>
+                      <span>{{ item.originAccountId.currency }} · {{ item.originAccountId.type }}</span>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="beneficiary-cell">
+                      <strong>{{ item.beneficiaryName }}</strong>
+                      <span>{{ item.destinationBank || 'External bank' }}</span>
+                    </div>
+                  </td>
+
+                  <td>{{ item.destinationAccount }}</td>
+
+                  <td>{{ item.amount | number:'1.0-2' }} {{ item.currency }}</td>
+
+                  <td>
+                    <span [class]="getStatusClass(item.status)">
+                      {{ item.status }}
+                    </span>
+                  </td>
+
+                  <td>
+                    <span [class]="getRiskClass(item.riskFlag)">
+                      {{ item.riskFlag }}
+                    </span>
+                  </td>
+
+                  <td>{{ item.processedAt | date:'medium' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div class="empty-state-card">
+          <h3>No transfers found</h3>
+          <p>Create transfers from your backend flow and they will appear here.</p>
+        </div>
+      }
+    </section>
+  }
+</section>
